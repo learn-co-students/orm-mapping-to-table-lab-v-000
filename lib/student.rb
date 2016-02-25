@@ -26,7 +26,7 @@ class Student
     SQL
     DB[:conn].execute(sql)
   end
-
+  #Saves the given instance's attributes into the database
   def save
     sql = <<-SQL
       INSERT INTO students (name, grade)
