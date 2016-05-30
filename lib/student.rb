@@ -1,3 +1,5 @@
+require 'pry'
+
 class Student
 
   # Remember, you can access your database connection anywhere in this class
@@ -43,6 +45,7 @@ class Student
 
 
   def self.create(name:,grade:)
+    binding.pry
     student = Student.new(name,grade)
     student.save
     student
