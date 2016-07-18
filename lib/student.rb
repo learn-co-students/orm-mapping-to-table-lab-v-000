@@ -27,15 +27,19 @@ class Student
     DB[:conn].execute(sql)
   end
 
-  def self.create(attributes)
-    student = Student.new(attributes.each {|key, value| self.send(("#{key}="), value)})
+  def self.create(name:, grade:)
+    student = Student.new(name, grade)
     student.save
     student
   end
 
   def save
-    DB[:conn].execute("INSERT INTO students (name, grade) VALUES (?, ?)", @name, @grade)
-    @id = DB[:conn].execute("SELECT id FROM students WHERE id = (SELECT MAX(id) FROM students)")
+    sql = <<-SQL
+    INSERT INTO students (name, grade)
+    VALUES (?, ?)
+    SQL
+    DB[:conn].execute(sql, self.name, self.grade)
+    @id = DB[:conn].execute("SELECT id FROM students WHERE id = (SELECT MAX(id) FROM students)")[0][0]
   end
 
 end
