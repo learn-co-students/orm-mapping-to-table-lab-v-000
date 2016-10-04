@@ -1,4 +1,5 @@
 require "spec_helper"
+require "pry"
 
 describe "Student" do
   let(:josh) {Student.new("Josh", "9th")}
