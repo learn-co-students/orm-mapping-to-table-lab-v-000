@@ -34,6 +34,7 @@ class Student
     DB[:conn].execute(sql, self.name, self.grade)
 
     @id = DB[:conn].execute("SELECT last_insert_rowid() FROM students")[0][0]
+    #[0][0] - here the first array is the row of the database and then the second array is the student itself who's id we want
     #selecting the id from the last created row in the database and adding it to student object to replicate the exact database
   end
 
