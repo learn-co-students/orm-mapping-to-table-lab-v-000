@@ -37,7 +37,7 @@ class Student
   end
 
   def self.create(student)
-    student = self.new(student[:name], student[:grade])
+    student = student.each {|key, value| self.send(("#{key}="), value)}
     student.save
     student
   end
