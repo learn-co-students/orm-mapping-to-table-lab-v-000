@@ -21,11 +21,15 @@ class Student
   end
 
   def save
-
+    sql = "INSERT INTO students (name, grade) VALUES (?, ?)"
+    DB[:conn].execute(sql, self.name, self.grade)
+    @id = DB[:conn].execute("SELECT id FROM students ORDER BY id DESC LIMIT 1;").join.to_i
   end
 
-  def self.create
-
+  def self.create(name:, grade:)
+      student = Student.new(name, grade)
+      student.save
+      student
   end
 
 
