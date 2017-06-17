@@ -37,16 +37,16 @@ class Student
     @id = DB[:conn].execute("SELECT MAX(id) FROM students").join.to_i
   end
 
-  def self.create(attributes)
-    student = Student.new()
-    attributes.each{ |key, value|
-      student.send("#{key}=", value)
+  def self.create(:name, :grade)#attributes)
+    Student.new(name, grade).tap { |student|
+      student.save
     }
-    # Student.new(name, grade).tap { |student|
-    #   student.save
+    # student = Student.new()
+    # attributes.each{ |key, value|
+    #   student.send("#{key}=", value)
     # }
-    student.save
-    student
+    # student.save
+    # student
   end
   
 end
