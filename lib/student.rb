@@ -3,7 +3,7 @@ class Student
   attr_reader :id
   # Remember, you can access your database connection anywhere in this class
   #  with DB[:conn] 
-  def initialize(name=nil, grade=nil, id = nil)
+  def initialize(name, grade, id = nil)
     @name = name
     @grade = grade
     @id = id
@@ -37,16 +37,18 @@ class Student
     @id = DB[:conn].execute("SELECT MAX(id) FROM students").join.to_i
   end
 
-  def self.create(:name, :grade)#attributes)
+  def self.create(name:, grade:)
     Student.new(name, grade).tap { |student|
       student.save
     }
+  end
+    # Another METAPROGRAMMING WAY TO DO IT:
+    # def self.create(attributes)
     # student = Student.new()
     # attributes.each{ |key, value|
     #   student.send("#{key}=", value)
     # }
     # student.save
     # student
-  end
-  
+    #end
 end
