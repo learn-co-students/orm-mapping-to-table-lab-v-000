@@ -3,7 +3,7 @@ class Student
   attr_accessor :name, :grade
   attr_reader :id
 
-  def initialize(name, grade, id = nil)
+  def initialize(name, grade, id=nil)
     @name = name
     @grade = grade
     @id = id
@@ -39,10 +39,8 @@ class Student
     @id = DB[:conn].execute("SELECT last_insert_rowid() FROM students")[0][0]
   end
 
-  def self.create(hash)
-    new_student = self.new(hash.each {|k,v| "#{k} = #{v}"})
-    new_student.save
-    new_student
+  def self.create(attributes)
+    self.new(attributes[:name], attributes[:grade]).tap {|new_student| new_student.save}
   end
 
 end
