@@ -5,13 +5,13 @@ class Student
   attr_accessor :name, :grade
   attr_reader :id
 
- def initialize(name, grade, id=nil)
+def initialize(name, grade, id=nil)
    @id = id
    @name = name
    @grade = grade
- end
+end
 
- def self.create_table
+def self.create_table
    sql =  <<-SQL
      CREATE TABLE IF NOT EXISTS students (
        id INTEGER PRIMARY KEY,
@@ -20,7 +20,7 @@ class Student
        )
    SQL
    DB[:conn].execute(sql)
- end
+end
 
  def self.drop_table
   sql = "DROP TABLE IF EXISTS students"
@@ -33,13 +33,17 @@ def save
       VALUES (?, ?)
     SQL
 
-    DB[:conn].execute(sql, self.name, self.grade)
-    @id = DB[:conn].execute("SELECT last_insert_rowid() FROM students")[0][0]
-  end
+    DB[:conn].execute(sql, name, grade)
+    sql = <<-SQL
+      SELECT id from students GROUP BY id ORDER BY id DESC LIMIT 1
+    SQL
+    @id = DB[:conn].execute(sql)[0][0]
+end
 
-  def self.create(name:, grade:)
+def self.create(name:, grade:)
    student = Student.new(name, grade)
    student.save
    student
- end
+end
+
 end
