@@ -16,14 +16,14 @@ class Student
     @id = DB[:conn].last_insert_row_id
   end
 
-  def self.create (attributes)
-    student = Student.new(attributes[:name], attributes[:grade])
+  def self.create (name:, grade:)
+    student = Student.new(name, grade)
     student.save
     student
   end
 
   def self.create_table
-    DB[:conn].execute("CREATE TABLE students (id INTEGER PRIMARY KEY, name TEXT, grade TEXT);")
+    DB[:conn].execute("CREATE TABLE IF NOT EXISTS students (id INTEGER PRIMARY KEY, name TEXT, grade TEXT);")
   end
 
   def self.drop_table
