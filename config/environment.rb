@@ -1,3 +1,5 @@
+#databases should be setup in the environment.rb file in config
+
 require 'bundler'
 Bundler.require
 
