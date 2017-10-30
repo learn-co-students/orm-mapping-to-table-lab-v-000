@@ -31,7 +31,7 @@ attr_reader :id
     DB[:conn].execute(sql, self.name, self.grade)
     @id = DB[:conn].execute("SELECT students.id FROM students;")[0][0]
   end
-  def self.create(name:, grade:)
+  def self.create(:name, :grade)
     student = Student.new(name, grade)
     student.save
     student
