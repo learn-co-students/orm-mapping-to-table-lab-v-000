@@ -37,19 +37,14 @@ attr_reader :id
       SELECT last_insert_rowid()
       FROM students
       SQL
+
     @id = DB[:conn].execute(sql_select)[0][0]
   end
 
-  def self.create(hash_of_attributes)
-
-    hash_of_attributes.each do |key, value|
-      DB[:conn].execute("INSERT INTO students (#{key}) VALUES (?)", value)
-    end
-
-    binding.pry
-
-    Student.new()
-
+  def self.create(grade:, name:)
+    student = Student.new(name, grade)
+    student.save
+    student
   end
 
 
