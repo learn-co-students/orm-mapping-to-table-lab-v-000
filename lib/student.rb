@@ -12,6 +12,7 @@ class Student
       sql =  <<-SQL 
         CREATE TABLE IF NOT EXISTS students (
           id INTEGER PRIMARY KEY, 
+          name TEXT,
           grade INTEGER
           )
           SQL
@@ -25,9 +26,20 @@ class Student
     DB[:conn].execute(sql) 
   end
 
-  def save
+  def self.save
+    sql = <<-SQL
+      INSERT INTO students (name, grade) 
+      VALUES (?, ?);
+      @id = id
+    SQL
+    DB[:conn].execute(sql, self.name, self.grade)
   end
-  
+
+  def self.create(name:, grade:)
+    student = self.new(name, grade)
+    student.each {|key, value| self.send(("#{key}="), value)}
+    self.save
+  end
 end
   
   
