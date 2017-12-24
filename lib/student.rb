@@ -1,3 +1,5 @@
+require 'pry'
+
 class Student
 
   attr_accessor :name, :grade
@@ -26,13 +28,17 @@ class Student
     DB[:conn].execute(sql) 
   end
 
-  def self.save
+  def save
     sql = <<-SQL
-      INSERT INTO students (name, grade) 
+      INSERT INTO students (id, name, grade) 
       VALUES (?, ?);
-      @id = id
     SQL
+    @id = self.id.last
+
     DB[:conn].execute(sql, self.name, self.grade)
+
+    # binding.pry
+
   end
 
   def self.create(name:, grade:)
