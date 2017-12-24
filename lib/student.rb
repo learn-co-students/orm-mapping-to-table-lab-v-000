@@ -3,6 +3,7 @@ require 'pry'
 class Student
 
   attr_accessor :name, :grade
+  attr_reader :id
 
   def initialize(name, grade, id = nil)
     @name = name
@@ -30,21 +31,21 @@ class Student
 
   def save
     sql = <<-SQL
-      INSERT INTO students (id, name, grade) 
+      INSERT INTO students (name, grade) 
       VALUES (?, ?);
     SQL
-    @id = self.id.last
-
+  #  binding.pry
+    # @id = self.id
     DB[:conn].execute(sql, self.name, self.grade)
-
+    new_id = DB[:conn].execute("SELECT last_insert_rowid() FROM students")
+    @id = new_id.flatten[0]
     # binding.pry
-
   end
 
   def self.create(name:, grade:)
     student = self.new(name, grade)
     student.each {|key, value| self.send(("#{key}="), value)}
-    self.save
+    self
   end
 end
   
