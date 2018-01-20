@@ -4,6 +4,13 @@ class Student
   attr_reader :id
 
 
+  def initialize(name, grade, id=nil)
+    @name = name
+    @grade = grade
+    @id = id
+  end
+
+
   def self.create_table
     sql = <<-SQL
       CREATE TABLE IF NOT EXISTS students (
@@ -17,24 +24,8 @@ class Student
 
 
   def self.drop_table
-    sql = <<-SQL
-      DROP TABLE students
-    SQL
+    sql = "DROP TABLE IF EXISTS students"
     DB[:conn].execute(sql)
-  end
-
-
-  def self.create(name:, grade:)
-    student = self.new(name, grade)
-    student.save
-    student
-  end
-
-
-  def initialize(name, grade, id=nil)
-    @name = name
-    @grade = grade
-    @id = id
   end
 
 
@@ -47,5 +38,12 @@ class Student
     DB[:conn].execute(sql, self.name, self.grade)
 
     @id = DB[:conn].execute("SELECT last_insert_rowid() FROM students;")[0][0]
+  end
+
+
+  def self.create(name:, grade:)
+    student = self.new(name, grade)
+    student.save
+    student
   end
 end
