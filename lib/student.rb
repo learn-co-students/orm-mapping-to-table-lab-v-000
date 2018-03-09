@@ -28,8 +28,21 @@ class Student
   end
 
   def save
-    #insert statement here
-    #then assign id to object as an attribute
+    sql = <<-SQL
+      INSERT INTO students (name, grade) VALUES (?, ?)
+    SQL
+    DB[:conn].execute(sql, self.name, self.grade)
+    sql_get_id = <<-SQL
+      SELECT id FROM students ORDER BY id DESC LIMIT 1
+    SQL
+
+    @id = DB[:conn].execute(sql_get_id)[0][0]
+  end
+
+  def self.create(name:, grade:)
+    student = Student.new(name, grade)
+    student.save
+    student
   end
 
 
