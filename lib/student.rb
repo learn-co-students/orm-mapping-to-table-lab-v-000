@@ -10,12 +10,16 @@ class Student
     @grade = grade
   end
 
+  # def id=(id)
+  #   @id = id
+  # end
+
   def self.create_table
     sql = <<-SQL
       CREATE TABLE IF NOT EXISTS students (
         id INTEGER PRIMARY KEY,
         name TEXT,
-        grade INTEGER
+        grade TEXT
       )
       SQL
       DB[:conn].execute(sql)
@@ -23,6 +27,12 @@ class Student
 
   def self.drop_table
     DB[:conn].execute("DROP TABLE students")
+  end
+
+  def save
+    DB[:conn].execute("INSERT INTO students (id, name, grade) VALUES (?,?,?)", @id, @name, @grade)
+    id_table = DB[:conn].execute("SELECT id FROM students WHERE name = (?)", self.name)
+    @id=(id_table)[0][0]
   end
 
 end
