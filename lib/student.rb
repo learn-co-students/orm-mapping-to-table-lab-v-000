@@ -1,5 +1,8 @@
 class Student
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 156069a06532c23f2d04f3fbf84a3b577f109aeb
     attr_accessor :name, :grade
     attr_reader :id
 
@@ -11,6 +14,7 @@ class Student
 
   def self.create_table
   	sql = <<-SQL
+<<<<<<< HEAD
 =======
 	attr_accessor :name, :grade
 	attr_reader :id
@@ -23,6 +27,8 @@ class Student
   def self.create_table 
   	sql = <<-SQL 
 >>>>>>> 167ddfe6f6ba65a6429fae8150a6525592fad1f8
+=======
+>>>>>>> 156069a06532c23f2d04f3fbf84a3b577f109aeb
   		CREATE TABLE IF NOT EXISTS students(
   			id INTEGER PRIMARY KEY,
   			name TEXT,
@@ -33,10 +39,14 @@ class Student
   end
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   def self.drop_table
 =======
   def self.drop_table 
 >>>>>>> 167ddfe6f6ba65a6429fae8150a6525592fad1f8
+=======
+  def self.drop_table
+>>>>>>> 156069a06532c23f2d04f3fbf84a3b577f109aeb
   	sql = <<-SQL
   		DROP TABLE students
   		SQL
@@ -58,9 +68,12 @@ class Student
   end
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> 167ddfe6f6ba65a6429fae8150a6525592fad1f8
+=======
+>>>>>>> 156069a06532c23f2d04f3fbf84a3b577f109aeb
 end
 
 
