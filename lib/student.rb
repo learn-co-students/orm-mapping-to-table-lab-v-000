@@ -1,4 +1,5 @@
 class Student
+<<<<<<< HEAD
     attr_accessor :name, :grade
     attr_reader :id
 
@@ -10,6 +11,18 @@ class Student
 
   def self.create_table
   	sql = <<-SQL
+=======
+	attr_accessor :name, :grade
+	attr_reader :id
+  # Remember, you can access your database connection anywhere in this class
+  #  with DB[:conn]  
+  def initialize(name, grade, id = nil)
+  	@name, @grade, @id = name, grade, id 
+  end
+
+  def self.create_table 
+  	sql = <<-SQL 
+>>>>>>> 167ddfe6f6ba65a6429fae8150a6525592fad1f8
   		CREATE TABLE IF NOT EXISTS students(
   			id INTEGER PRIMARY KEY,
   			name TEXT,
@@ -19,7 +32,11 @@ class Student
   			DB[:conn].execute(sql)
   end
 
+<<<<<<< HEAD
   def self.drop_table
+=======
+  def self.drop_table 
+>>>>>>> 167ddfe6f6ba65a6429fae8150a6525592fad1f8
   	sql = <<-SQL
   		DROP TABLE students
   		SQL
@@ -40,4 +57,10 @@ class Student
   	student
   end
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 167ddfe6f6ba65a6429fae8150a6525592fad1f8
 end
+
+
