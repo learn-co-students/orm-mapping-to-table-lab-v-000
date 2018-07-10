@@ -44,9 +44,8 @@ class Student
     DB[:conn].execute(sql)
   end
 
-  def self.create(attributes)
-    attrs = attributes.collect {|k, v| v}
-    student = Student.new(attrs[0], attrs[1])
+  def self.create(name:, grade:)
+    student = Student.new(name, grade)
     student.save
     student
   end
