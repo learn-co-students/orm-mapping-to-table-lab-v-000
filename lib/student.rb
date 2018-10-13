@@ -27,12 +27,31 @@ class Student
     end
 
   #Method hat can drop that table
-
-
+  def self.drop_table
+      sql = <<-SQL
+        DROP TABLE students
+        SQL
+      DB[:conn].execute(sql)
+  end
 
   #Method save that can save the data concerning an individual student object to the database
+  def save
+    sql = <<-SQL
+      INSERT INTO students (name, grade)
+      VALUES (?, ?)
+      SQL
+
+      DB[:conn].execute(sql, self.name, self.grade)
+
+      @id = DB[:conn].execute("SELECT last_insert_rowid() FROM students")[0][0]
+  end
 
   #Method that creates a new instance of student class and then saves it to the database
 
+  def self.create(name:, grade:)
+    student = Student.new(name, grade)
+    student.save
+    student
+  end
 
 end
