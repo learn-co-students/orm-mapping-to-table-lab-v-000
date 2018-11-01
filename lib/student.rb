@@ -31,13 +31,9 @@ class Student
     @id = DB[:conn].execute("SELECT last_insert_rowid() FROM students")[0][0]
     self
   end
-  # Remember, you can access your database connection anywhere in this class
-  #  with DB[:conn]
 
   def self.create(name:, grade:)
     new_student_id = self.new(name, grade).save
-    # DB[:conn].execute("SELECT * FROM students WHERE id = ?", new_student_id)[0][1]
-    # binding.pry 
   end
 
 end
