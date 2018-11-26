@@ -2,7 +2,7 @@ class Student
   attr_accessor :name, :grade
   attr_reader :id
   
-  def initialize(:name, :grade, :id = nil)
+  def initialize(name, grade, id = nil)
     @name = name 
     @grade= grade 
     @id = id
@@ -10,7 +10,7 @@ class Student
   
   def self.create_table 
     sql = <<-SQL 
-    CREATE TABLE IF NOT EXTISTS students (id INTEGER PRIMARY KEY, 
+    CREATE TABLE IF NOT EXISTS students (id INTEGER PRIMARY KEY, 
     name TEXT, 
     grade TEXT)
     SQL
@@ -18,7 +18,9 @@ class Student
   end
   
   def self.drop_table
-    sql = DROP TABLE students
+    sql = <<-SQL 
+    DROP TABLE students
+    SQL
     DB[:conn].execute(sql) 
   end
   
