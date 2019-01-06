@@ -37,6 +37,9 @@ class Student
     self.id = new_id
   end
 
-
+  def self.create(hash)
+    self.new(hash[:name], hash[:grade], hash[:id])
+    self.save(@name, @grade)
+  end
 
 end
