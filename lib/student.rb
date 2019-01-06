@@ -1,3 +1,4 @@
+require 'pry'
 class Student
 
   # Remember, you can access your database connection anywhere in this class
@@ -27,19 +28,19 @@ class Student
     DB[:conn].execute(sql)
   end
 
-  def save(name, grade)
+  def save
     sql = <<-SQL
-     INSERT INTO students (name, grade) VALUES (?, ?)",
-     name, grade)
+     INSERT INTO students (name, grade) 
+     VALUES (?, ?)
      SQL
-    DB[:conn].execute(sql)
-    new_id = DB[:conn].execute("SELECT id FROM students ORDER BY id DESC LIMIT 1")
-    self.id = new_id
+    DB[:conn].execute(sql, self.name, self.grade)
+    @id = DB[:conn].execute("SELECT last_insert_rowid() FROM students")[0][0]
   end
 
   def self.create(hash)
-    self.new(hash[:name], hash[:grade], hash[:id])
-    self.save(@name, @grade)
+    new_s = self.new(hash[:name], hash[:grade], hash[:id])
+    new_s.save
+    new_s
   end
 
 end
