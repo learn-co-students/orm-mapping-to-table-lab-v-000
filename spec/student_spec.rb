@@ -1,6 +1,6 @@
 require "spec_helper"
 
-puts describe "Student" do
+describe "Student" do
   let(:josh) {Student.new("Josh", "9th")}
 
   before(:each) do
