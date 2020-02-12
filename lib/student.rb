@@ -23,11 +23,7 @@ end
   def self.drop_table
 
     sql =  <<-SQL
-      DELETE FROM students (
-        id INTEGER PRIMARY KEY,
-        name TEXT,
-        grade INTEGER
-        )
+    DROP TABLE students
         SQL
     DB[:conn].execute(sql)
   end
@@ -44,7 +40,7 @@ end
     @id = DB[:conn].execute("SELECT last_insert_rowid() FROM students")[0][0]
   end
 
-    def self.create(name, grade)
+    def self.create(name:, grade:)
       student = Student.new(name, grade)
       student.save
       student
