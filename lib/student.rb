@@ -38,9 +38,15 @@ class Student
       SQL
       
     DB[:conn].execute(sql, self.name, self.grade)
+    p @id = DB[:conn].execute("SELECT last_insert_rowid() FROM students")[0][0]
     @id = DB[:conn].execute("SELECT last_insert_rowid() FROM students")[0][0]
   end
 
+ # .create
+ # 1. makes Ruby object Student.new
+ # 2. #save INSERTs object into db table AND
+ # 3. #save reads last inserted row ID in db table as the object
+ #    that is returned by Student.create method
   def self.create(name:, grade:)
     student = Student.new(name, grade)
     student.save
