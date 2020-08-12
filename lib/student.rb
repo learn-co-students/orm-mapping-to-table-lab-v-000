@@ -2,7 +2,7 @@ class Student
   attr_accessor :name, :grade
   attr_reader :id
 
-  def initialize(name, grade, id:nil)
+  def initialize(name, grade, id=0)
     @name = name
     @grade = grade
     @id = id
@@ -10,39 +10,36 @@ class Student
 
   def self.create_table
     sql = <<-SQL
-    CREATE TABLE IF NOT EXISTS students (
-      id INTEGER PRIMARY KEY,
-      name TEXT,
-      grade INTEGER)
-    SQL
-    DB[:conn].execute(sql)
+      CREATE TABLE IF NOT EXISTS students(
+        id INTEGER PRIMARY KEY,
+        name TEXT,
+        grade INTEGER
+      )
+      SQL
+      DB[:conn].execute(sql)
   end
 
   def self.drop_table
-    sql = <<-SQL
-    DROP TABLE IF EXISTS students
-    SQL
-    DB[:conn].execute(sql)
-  end
-
-  def self.create(name:, grade:)
-    newstudent = self.new(name, grade)
-    newstudent.save
-    newstudent
+    DB[:conn].execute("DROP TABLE IF EXISTS students")
   end
 
   def save
-    # ? marks are bound parameters, placeholders utilized by execute method where values are passed in to replace ?.
     sql = <<-SQL
-      INSERT INTO students (name, grade)
-      VALUES (?, ?)
+    INSERT INTO students (name, grade)
+    VALUES(?, ?)
     SQL
     DB[:conn].execute(sql, self.name, self.grade)
-    @id = DB[:conn].execute("SELECT last_insert_rowid() FROM students")[0][0]
+    @id = DB[:conn].execute("SELECT last_insert_rowid() FROM students") [0][0]
+  end
+
+  def self.create(name:, grade:)
+    student = Student.new(name, grade)
+    student.save
+    student
+
   end
 
 
-  # Remember, you can access your database connection anywhere in this class
-  #  with DB[:conn]
+
 
 end
